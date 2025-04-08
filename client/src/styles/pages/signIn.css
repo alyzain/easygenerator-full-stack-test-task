@@ -1,0 +1,23 @@
+.sign-in-container {
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 30px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.sign-in-container h2 {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.sign-in-container .form-group {
+    margin-bottom: 20px;
+}
+
+.sign-in-container .form-group input {
+    width: 100%;
+}

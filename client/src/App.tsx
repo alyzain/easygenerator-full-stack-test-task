@@ -1,11 +1,20 @@
-import './App.css'
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import LandingPage from './pages/LandingPage';
+import SignUp from './pages/SignUp';
+import SignIn from './pages/SignIn';
 
 function App() {
   return (
     <>
-      <div className="App">
-        <h1>Welcome to the Full-Stack Authentication App</h1>
-      </div>
+      <Router>
+        <div>
+          <Routes>
+            <Route path="/" element={<LandingPage />} />
+            <Route path="/sign-up" element={<SignUp />} />
+            <Route path="/sign-in" element={<SignIn />} />
+          </Routes>
+        </div>
+      </Router>
     </>
   )
 }

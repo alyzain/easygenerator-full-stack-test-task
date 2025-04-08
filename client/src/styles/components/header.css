@@ -1,0 +1,45 @@
+.header-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background-color: #fff;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.header-nav .logo {
+    height: 40px;
+}
+
+.auth-switch {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.auth-switch p {
+    margin-right: 10px;
+    font-size: 14px;
+    color: #777;
+}
+
+.auth-switch .btn {
+    font-size: 14px;
+    background-color: transparent;
+    border: 1px solid #2196f3;
+    color: #2196f3;
+    padding: 8px 15px;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.auth-switch .btn:hover {
+    background-color: #2196f3;
+    color: white;
+    border-color: #2196f3;
+}
+
+.auth-switch .btn:focus {
+    outline: none;
+}
