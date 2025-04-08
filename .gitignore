@@ -1,0 +1,16 @@
+# Node modules (for both client and server)
+node_modules/
+
+# Build output directories (for both client and server)
+dist/
+client/build/
+server/dist/
+
+# Environment files (for both client and server)
+*.env
+
+# VS Code settings (common across the project)
+.vscode/
+
+# Log files (common across the project)
+*.log
