@@ -1,4 +1,4 @@
-import { ConflictException, Injectable, InternalServerErrorException } from '@nestjs/common';
+import { ConflictException, Injectable, InternalServerErrorException, UnauthorizedException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { User } from './schemas/user.schema';
 import { Model } from 'mongoose';
@@ -6,6 +6,7 @@ import * as bcrypt from 'bcryptjs';
 import { JwtService } from '@nestjs/jwt';
 import { SignUpRequestDto } from './dto/signup-user.dto';
 import { ConfigService } from '@nestjs/config';
+import { SignInRequestDto } from './dto/signin-user.dto';
 
 @Injectable()
 export class AuthService {
@@ -52,6 +53,34 @@ export class AuthService {
             user: { email: user.email, name: user.name },
             accessToken,
             message: 'User registered successfully',
+        };
+    }
+
+    /**
+     * Signs in a user by verifying their credentials and generating a JWT token.
+     * @param signInDTO The sign-in data containing email and password
+     * @returns An object containing the user object and a JWT token if authentication is successful
+     */
+    async signIn(request: SignInRequestDto): Promise<{ user: { email: string; name: string }; accessToken: string; message: string }> {
+        const { email, password } = request;
+
+        const user = await this.userModel.findOne({ email });
+        if (!user) {
+            throw new UnauthorizedException('Invalid email or password');
+        }
+
+        const isPasswordValid = await bcrypt.compare(password, user.password);
+        if (!isPasswordValid) {
+            throw new UnauthorizedException('Invalid email or password');
+        }
+
+        const payload = { id: user._id, email: user.email };
+        const accessToken = this.jwtService.sign(payload);
+
+        return {
+            user: { email: user.email, name: user.name },
+            accessToken,
+            message: 'User signed in successfully',
         };
     }
 }
