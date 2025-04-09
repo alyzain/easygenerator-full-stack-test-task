@@ -5,6 +5,7 @@ import { AuthModule } from './auth/auth.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ProfileModule } from './profile/profile.module';
+import { LoggerModule } from './logger/logger.module';
 
 @Module({
   imports: [
@@ -20,7 +21,8 @@ import { ProfileModule } from './profile/profile.module';
       inject: [ConfigService],
     }),
     AuthModule,
-    ProfileModule
+    ProfileModule,
+    LoggerModule
   ],
   controllers: [AppController],
   providers: [AppService],

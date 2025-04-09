@@ -7,6 +7,7 @@ import { JwtService } from '@nestjs/jwt';
 import { SignUpRequestDto } from './dto/signup-user.dto';
 import { ConfigService } from '@nestjs/config';
 import { SignInRequestDto } from './dto/signin-user.dto';
+import { LoggerService } from 'src/logger/logger.service';
 
 @Injectable()
 export class AuthService {
@@ -16,6 +17,7 @@ export class AuthService {
         private userModel: Model<User>,
         private jwtService: JwtService,
         private configService: ConfigService,
+        private logger: LoggerService,
     ) { }
 
     /**
@@ -26,14 +28,23 @@ export class AuthService {
      */
     async signUp(request: SignUpRequestDto): Promise<{ user: { email: string; name: string }; accessToken: string; message: string }> {
         const { name, email, password } = request;
+        this.logger.log(`Starting sign-up for user with email: ${email}`);
 
         const existingUser = await this.userModel.findOne({ email });
         if (existingUser) {
+            this.logger.warn(`Sign-up attempt failed: User with email ${email} already exists.`);
             throw new ConflictException('User already exists with this email');
         }
 
         const saltRounds = Number(this.configService.get<number>('BCRYPT_SALT_ROUNDS')) ?? this.saltRoundsFallback;
-        const hashedPassword = await bcrypt.hash(password, saltRounds);
+        let hashedPassword: string;
+
+        try {
+            hashedPassword = await bcrypt.hash(password, saltRounds);
+        } catch (error) {
+            this.logger.error(`Error hashing password for user ${email}: ${error.message}`, error.stack);
+            throw new InternalServerErrorException('Error creating user');
+        }
 
         let user;
         try {
@@ -42,7 +53,9 @@ export class AuthService {
                 email,
                 password: hashedPassword,
             });
+            this.logger.log(`User ${email} registered successfully.`);
         } catch (error) {
+            this.logger.error(`Error creating user with email ${email}: ${error.message}`, error.stack);
             throw new InternalServerErrorException('Error creating user');
         }
 
@@ -63,17 +76,21 @@ export class AuthService {
      */
     async signIn(request: SignInRequestDto): Promise<{ user: { email: string; name: string }; accessToken: string; message: string }> {
         const { email, password } = request;
-
+        this.logger.log(`Starting sign-in for user with email: ${email}`);
+        
         const user = await this.userModel.findOne({ email });
         if (!user) {
+            this.logger.warn(`Sign-in attempt failed: User with email ${email} not found.`);
             throw new UnauthorizedException('Invalid email or password');
         }
 
         const isPasswordValid = await bcrypt.compare(password, user.password);
         if (!isPasswordValid) {
+            this.logger.warn(`Sign-in attempt failed: Incorrect password for ${email}.`);
             throw new UnauthorizedException('Invalid email or password');
         }
 
+        this.logger.log(`User ${email} signed in successfully.`);
         const payload = { id: user._id, email: user.email };
         const accessToken = this.jwtService.sign(payload);
 
