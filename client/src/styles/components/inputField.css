@@ -25,3 +25,14 @@ label {
 .input-container input {
     font-size: 14px;
 }
+
+.error-input-message {
+    color: #e74c3c;
+    font-size: 14px;
+    margin-top: 5px;
+    text-align: left;
+}
+
+.input-error {
+    border: 1px solid #e74c3c;
+}

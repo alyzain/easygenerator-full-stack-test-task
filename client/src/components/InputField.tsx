@@ -6,11 +6,12 @@ interface InputFieldProps {
     type: string;
     value: string;
     onChange: React.ChangeEventHandler<HTMLInputElement>;
+    onBlur: React.FocusEventHandler<HTMLInputElement>;
     error?: string;
-    placeholder?: string; 
+    placeholder?: string;
 }
 
-const InputField = ({ label, type, value, onChange, error, placeholder }: InputFieldProps): JSX.Element => {
+const InputField = ({ label, type, value, onChange, onBlur, error, placeholder }: InputFieldProps): JSX.Element => {
     return (
         <div className="input-container">
             <label>{label}</label>
@@ -19,11 +20,12 @@ const InputField = ({ label, type, value, onChange, error, placeholder }: InputF
                 type={type}
                 value={value}
                 onChange={onChange}
-                className={`input-field ${error ? 'input-error' : ''}`} 
+                onBlur={onBlur}
+                className={`input-field ${error ? 'input-error' : ''}`}
                 placeholder={placeholder}
-                aria-invalid={error ? 'true' : 'false'} 
+                aria-invalid={error ? 'true' : 'false'}
             />
-            {error && <div className="error-message">{error}</div>}
+            {error && <div className="error-input-message">{error}</div>}
         </div>
     );
 };
