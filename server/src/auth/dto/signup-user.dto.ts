@@ -49,8 +49,7 @@ export class SignUpResponseDto {
     message: string;
 
     @IsObject()
-    @IsOptional()
-    data?: {
+    data: {
         user: UserResponseDto;
         accessToken: string;
     };

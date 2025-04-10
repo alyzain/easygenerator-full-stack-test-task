@@ -21,10 +21,7 @@ export class AuthController {
                 },
             };
         } catch (error) {
-            return {
-                statusCode: error.getStatus(),
-                message: error.message,
-            };
+            throw error;
         }
     }
 
@@ -42,10 +39,7 @@ export class AuthController {
                 },
             };
         } catch (error) {
-            return {
-                statusCode: error.getStatus(),
-                message: error.message,
-            };
+            throw error;
         }
     }
 }

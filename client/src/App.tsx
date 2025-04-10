@@ -5,18 +5,14 @@ import SignIn from './pages/SignIn';
 
 function App() {
   return (
-    <>
-      <Router>
-        <div>
-          <Routes>
-            <Route path="/" element={<LandingPage />} />
-            <Route path="/sign-up" element={<SignUp />} />
-            <Route path="/sign-in" element={<SignIn />} />
-          </Routes>
-        </div>
-      </Router>
-    </>
-  )
+    <Router>
+      <Routes>
+        <Route path="/signup" element={<SignUp />} />
+        <Route path="/signin" element={<SignIn />} />
+        <Route path="/landingpage" element={<LandingPage />} />
+      </Routes>
+    </Router>
+  );
 }
 
-export default App
+export default App;

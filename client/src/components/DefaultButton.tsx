@@ -3,15 +3,13 @@ import '../styles/components/button.css';
 
 interface ButtonProps {
     label: string;
-    onClick: () => void;
     type?: "submit" | "button";
     styleClass?: string;
 }
 
-const Button = (props: ButtonProps): JSX.Element => {
-    const { label, onClick, type, styleClass } = props;
+const Button = ({ label, type = "button", styleClass }: ButtonProps): JSX.Element => {
     return (
-        <button className={`btn ${styleClass}`} onClick={onClick} type={type}>
+        <button className={`btn ${styleClass}`} type={type}>
             {label}
         </button>
     );

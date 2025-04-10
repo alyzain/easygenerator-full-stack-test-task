@@ -26,8 +26,7 @@ export class SignInResponseDto {
     message: string;
 
     @IsObject()
-    @IsOptional()
-    data?: {
+    data: {
         user: UserResponseDto;
         accessToken: string;
     };
