@@ -3,6 +3,7 @@ import LandingPage from './pages/LandingPage';
 import SignUp from './pages/SignUp';
 import SignIn from './pages/SignIn';
 import NotFoundPage from './pages/NotFoundPage';
+import PrivateRoute from './HOCs/PrivateRoute';
 
 function App() {
   return (
@@ -11,7 +12,7 @@ function App() {
         <Route path="/" element={<Navigate to="/signin" />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/signin" element={<SignIn />} />
-        <Route path="/landingpage" element={<LandingPage />} />
+        <Route path="/landingpage" element={<PrivateRoute element={<LandingPage />} />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </Router>
