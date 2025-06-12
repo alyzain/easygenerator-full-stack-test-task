@@ -35,5 +35,16 @@ services:
     depends_on:
       - server
 
+  test:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    container_name: test-container
+    command: ["npm", "run", "test"]
+    depends_on:
+      - mongo
+    env_file:
+      - .env
+
 volumes:
   mongo-data:

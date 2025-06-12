@@ -2,9 +2,13 @@
 
 This repository contains a full-stack authentication application developed as part of the **Easygenerator Full Stack Test Task**. The project consists of a frontend built with **React** and **TypeScript** using **Vite**, and a backend built using **NestJS**, **MongoDB**, and **JWT** for secure authentication.
 
+---
+
 ## Overview
 
 This application enables users to securely register, log in, and access protected resources. It demonstrates best practices for authentication, security, validation, and robust error handling.
+
+---
 
 ## Features
 
@@ -22,6 +26,7 @@ This application enables users to securely register, log in, and access protecte
 - **Protected Landing Page**:
   - Accessible only to authenticated users.
   - Displays a welcome message and user details.
+  - Redirects to the Sign-In page if the user is not authenticated.
 
 - **404 Page**:
   - Custom-designed page for undefined routes.
@@ -29,6 +34,7 @@ This application enables users to securely register, log in, and access protecte
 - **Responsive UI and Form Validation**:
   - Validates inputs for email format, password strength, and name.
 
+---
 
 ### Backend
 
@@ -49,6 +55,14 @@ This application enables users to securely register, log in, and access protecte
 - **Comprehensive Error Handling**:
   - Consistent and clear API responses with appropriate HTTP status codes and descriptive error messages.
 
+- **Swagger API Documentation**:
+  - Provides detailed API documentation for all endpoints.
+  - Accessible at `http://localhost:3000/docs`.
+
+- **Unit Tests for Auth Module**:
+  - Includes units tests for the Auth Controller and Services to ensure proper functionality and reliability.
+
+---
 
 ## Tech Stack
 
@@ -59,78 +73,94 @@ This application enables users to securely register, log in, and access protecte
 
 ### Backend
 - **NestJS**
-- **MongoDB** (with Mongoose, for interacting with database )
+- **MongoDB** (with Mongoose, for interacting with database)
 - **JWT (JSON Web Tokens)**
 - **Passport.js**
 - **Bcryptjs**
 
+---
 
-## Getting Started
+## Dockerized Setup
+The project has been fully Dockerized for easier deployment and management. It includes three services:
+- **MongoDB**: Database service.
+- **Server**: Backend service built with NestJS.
+- **Client**: Frontend service built with React.
 
-### Backend Setup
+Additionally, a dedicated test service is included to run unit tests for the backend authentication module, ensuring reliability and correctness.
+
+### Prerequisites
+- Install **Docker** and **Docker Compose** on your machine.
+
+---
+
+### Running the Application with Docker
 
 1. Clone the repository:
+   ```bash
+   git clone https://github.com/alyzain/easygenerator-full-stack-test-task.git
+   ```
 
-```bash
-git clone https://github.com/alyzain/easygenerator-full-stack-test-task.git
-```
+2. Navigate to the project directory:
+   ```bash
+   cd easygenerator-full-stack-test-task
+   ```
 
-2. Navigate to the server directory:
+3. Create a `.env` file in the **root directory**:
+   ```plaintext
+   MONGODB_URI=mongodb://mongo:27017/easygenerator
+   JWT_EXPRIES=2h
+   JWT_SECRET=37b641de01b2663ece4ee155ab413af1c7c8e8257275a8acbb30bacadfc63779
+   BCRYPT_SALT_ROUNDS=10
+   ```
 
-```bash
-cd server
-```
+4. Build and start the containers:
+   ```bash
+   docker-compose up --build
+   ```
 
-3. Install dependencies:
+5. Access the application:
+   - **Frontend**: `http://localhost:5173`
+   - **Backend**: `http://localhost:3000`
+   - **API Documentation** `http://localhost:3000/docs`
 
-```bash
-npm install
-```
+---
 
-4. Configure environment variables (`.env`):
 
-```env
-MONGODB_URI=mongodb://localhost:27017/easygenerator
-JWT_EXPRIES=2h
-JWT_SECRET=alyzain
-BCRYPT_SALT_ROUNDS=10
-```
+### Frontend Routes
 
-5. Start the backend server:
+- `/signup` - User registration page
+- `/signin` - User login page
+- `/landing` - Protected landing page for authenticated users
+- `/*` - 404 page for undefined routes
 
-```bash
-npm run start:dev
-```
-
-### Frontend Setup
-
-1. Navigate to the client directory:
-
-```bash
-cd ../client
-```
-
-2. Install dependencies:
-
-```bash
-npm install
-```
-
-3. Start the frontend server:
-
-```bash
-npm run dev
-```
-
-4. Access the application at `http://localhost:5173`
+---
 
 ## API Endpoints
 
 - `POST /auth/signup` - User registration
 - `POST /auth/signin` - User login
-- `GET /profile` - Protected user profile information [For d]
+- `GET /users/profile` - Protected user profile information
 
-### Example CURL Commands
+---
+
+### Swagger API Documentation
+Access detailed API documentation at:
+```
+http://localhost:3000/docs
+```
+
+---
+
+## Unit Tests
+
+Unit tests have been added to ensure the reliability of the backend services. Run the tests using:
+```bash
+docker-compose up test
+```
+
+---
+
+## Example CURL Commands
 
 ```bash
 # Signin example
@@ -142,22 +172,12 @@ curl --location 'http://localhost:3000/auth/signin' \
 }'
 
 # Profile example
-curl --location 'http://localhost:3000/auth/signin' \
-curl --location 'http://localhost:3000/profile' \
+curl --location 'http://localhost:3000/users/profile' \
 --header 'Content-Type: application/json' \
---header 'Authorization: Bearer token' \
---data ''
+--header 'Authorization: Bearer <token>'
 ```
 
-
-## Future Improvements
-
-- **Password Reset Functionality**
-- **Email Verification**
-- **Role-Based Access Control**
-- **Swagger API Documentation**
-- **Unit and Integration Testing (Jest)**
-- **Dockerization and CI/CD Integration**
+---
 
 ## Screenshots
 
@@ -179,4 +199,4 @@ curl --location 'http://localhost:3000/profile' \
 
 ---
 
-Built with ❤️ by [Aly Zain](https://github.com/alyzain)
+## Built With ❤️ by [Aly Zain](https://github.com/alyzain)
