@@ -1,4 +1,4 @@
-import { IsString, IsEmail, MinLength, Matches, IsNotEmpty, IsObject, IsOptional, MaxLength } from 'class-validator';
+import { IsString, IsEmail, MinLength, Matches, IsNotEmpty, IsObject, MaxLength } from 'class-validator';
 
 const MIN_PASSWORD_LENGTH = 8;
 const MAX_PASSWORD_LENGTH = 20;

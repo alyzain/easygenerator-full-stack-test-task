@@ -1,12 +1,12 @@
 import { ConflictException, Injectable, InternalServerErrorException, UnauthorizedException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { User } from './schemas/user.schema';
+import { User } from '../users/schemas/user.schema';
 import { Model } from 'mongoose';
 import * as bcrypt from 'bcryptjs';
 import { JwtService } from '@nestjs/jwt';
-import { SignUpRequestDto } from './dto/signup-user.dto';
+import { SignUpRequestDto, SignUpResponseDto } from './dto/signup.dto';
 import { ConfigService } from '@nestjs/config';
-import { SignInRequestDto } from './dto/signin-user.dto';
+import { SignInRequestDto, SignInResponseDto } from './dto/signin.dto';
 import { LoggerService } from 'src/logger/logger.service';
 
 @Injectable()
@@ -26,7 +26,7 @@ export class AuthService {
      * @param signUpDTO The sign-up data containing name, email, and password
      * @returns An object containing the user object, JWT token, and a success or faliure message
      */
-    async signUp(request: SignUpRequestDto): Promise<{ user: { email: string; name: string }; accessToken: string; message: string }> {
+    async signUp(request: SignUpRequestDto): Promise<SignUpResponseDto> {
         const { name, email, password } = request;
         this.logger.log(`Starting sign-up for user with email: ${email}`);
 
@@ -63,9 +63,12 @@ export class AuthService {
         const accessToken = this.jwtService.sign(payload);
 
         return {
+          statusCode: 201,
+          message: 'User registered successfully',
+          data: {
             user: { email: user.email, name: user.name },
             accessToken,
-            message: 'User registered successfully',
+          },
         };
     }
 
@@ -74,7 +77,7 @@ export class AuthService {
      * @param signInDTO The sign-in data containing email and password
      * @returns An object containing the user object and a JWT token if authentication is successful
      */
-    async signIn(request: SignInRequestDto): Promise<{ user: { email: string; name: string }; accessToken: string; message: string }> {
+    async signIn(request: SignInRequestDto): Promise<SignInResponseDto> {
         const { email, password } = request;
         this.logger.log(`Starting sign-in for user with email: ${email}`);
         
@@ -95,9 +98,12 @@ export class AuthService {
         const accessToken = this.jwtService.sign(payload);
 
         return {
-            user: { email: user.email, name: user.name },
-            accessToken,
+            statusCode: 200,
             message: 'User signed in successfully',
+            data: {
+              user: { email: user.email, name: user.name },
+              accessToken,
+            }
         };
     }
 }

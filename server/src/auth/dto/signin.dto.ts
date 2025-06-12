@@ -1,4 +1,4 @@
-import { IsEmail, IsString, IsNotEmpty, IsObject, IsOptional } from 'class-validator';
+import { IsEmail, IsString, IsNotEmpty, IsObject } from 'class-validator';
 
 export class SignInRequestDto {
     @IsNotEmpty({ message: 'Email cannot be empty' })

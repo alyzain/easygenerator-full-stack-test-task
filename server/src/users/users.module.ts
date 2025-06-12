@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
-import { ProfileController } from './profile.controller';
-import { ProfileService } from './profile.service';
+import { UsersController } from './users.controller';
+import { UsersService } from './users.service';
 import { MongooseModule } from '@nestjs/mongoose';
-import { UserSchema } from 'src/auth/schemas/user.schema';
+import { UserSchema } from 'src/users/schemas/user.schema';
 import { LoggerModule } from 'src/logger/logger.module';
 
 @Module({
@@ -10,7 +10,7 @@ import { LoggerModule } from 'src/logger/logger.module';
     MongooseModule.forFeature([{ name: 'User', schema: UserSchema }]),
     LoggerModule
   ],
-  controllers: [ProfileController],
-  providers: [ProfileService]
+  controllers: [UsersController],
+  providers: [UsersService]
 })
-export class ProfileModule { }
+export class UsersModule { }

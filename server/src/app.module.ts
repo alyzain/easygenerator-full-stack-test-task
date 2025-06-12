@@ -4,7 +4,7 @@ import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
-import { ProfileModule } from './profile/profile.module';
+import { UsersModule } from './users/users.module';
 import { LoggerModule } from './logger/logger.module';
 
 @Module({
@@ -21,7 +21,7 @@ import { LoggerModule } from './logger/logger.module';
       inject: [ConfigService],
     }),
     AuthModule,
-    ProfileModule,
+    UsersModule,
     LoggerModule
   ],
   controllers: [AppController],
