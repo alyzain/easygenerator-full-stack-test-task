@@ -22,9 +22,9 @@ import { LoggerModule } from './logger/logger.module';
     }),
     AuthModule,
     UsersModule,
-    LoggerModule
+    LoggerModule,
   ],
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule { }
+export class AppModule {}

@@ -15,7 +15,9 @@ import { LoggerModule } from 'src/logger/logger.module';
     JwtModule.registerAsync({
       inject: [ConfigService],
       useFactory: (config: ConfigService): JwtModuleOptions => {
-        const expiresIn: string | number | undefined = config.get<string | number | undefined>('JWT_EXPRIES');
+        const expiresIn: string | number | undefined = config.get<
+          string | number | undefined
+        >('JWT_EXPRIES');
         const signOptions: JwtSignOptions = {
           expiresIn: expiresIn,
         };
@@ -27,10 +29,10 @@ import { LoggerModule } from 'src/logger/logger.module';
       },
     }),
     MongooseModule.forFeature([{ name: 'User', schema: UserSchema }]),
-    LoggerModule
+    LoggerModule,
   ],
   controllers: [AuthController],
   providers: [AuthService, JwtStrategy],
-  exports: [JwtStrategy, PassportModule]
+  exports: [JwtStrategy, PassportModule],
 })
-export class AuthModule { }
+export class AuthModule {}

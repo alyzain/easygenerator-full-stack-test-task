@@ -8,9 +8,9 @@ import { LoggerModule } from 'src/logger/logger.module';
 @Module({
   imports: [
     MongooseModule.forFeature([{ name: 'User', schema: UserSchema }]),
-    LoggerModule
+    LoggerModule,
   ],
   controllers: [UsersController],
-  providers: [UsersService]
+  providers: [UsersService],
 })
-export class UsersModule { }
+export class UsersModule {}

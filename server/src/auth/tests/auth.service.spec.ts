@@ -51,7 +51,11 @@ describe('AuthService', () => {
       mockUserModel.findOne.mockResolvedValue({ email: 'user@example.com' });
 
       await expect(
-        authService.signUp({ name: 'John Doe', email: 'user@example.com', password: 'Password123!' }),
+        authService.signUp({
+          name: 'John Doe',
+          email: 'user@example.com',
+          password: 'Password123!',
+        }),
       ).rejects.toThrow('User already exists with this email');
     });
 
@@ -86,7 +90,10 @@ describe('AuthService', () => {
       mockUserModel.findOne.mockResolvedValue(null);
 
       await expect(
-        authService.signIn({ email: 'user@example.com', password: 'Password123!' }),
+        authService.signIn({
+          email: 'user@example.com',
+          password: 'Password123!',
+        }),
       ).rejects.toThrow('Invalid email or password');
     });
 
@@ -97,7 +104,10 @@ describe('AuthService', () => {
       });
 
       await expect(
-        authService.signIn({ email: 'user@example.com', password: 'WrongPassword!' }),
+        authService.signIn({
+          email: 'user@example.com',
+          password: 'WrongPassword!',
+        }),
       ).rejects.toThrow('Invalid email or password');
     });
 
